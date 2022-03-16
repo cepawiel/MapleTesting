@@ -1,6 +1,5 @@
 name: MapleTesting Build
 on:
-  workflow_dispatch:
   push:
     branches: [main]
 
@@ -14,18 +13,29 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build
-        # uses: addnab/docker-run-action@v3
         uses: ./.github/actions/kos-container
         with:
-          # image: ghcr.io/cepawiel/dc-kos-base:gcc9-latest
-          # options: -v ${{ github.workspace }}:/src
           run: |
             source /opt/toolchains/dc/kos/environ.sh
-            kos-cc -v
-            kos-c++ -v
-            make
+            make elf
+            make cdi
 
+      - name: Upload Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: MapleTest
+          path: |
+            build/mapletest.elf
+            build/mapletest.cdi
 
+      # - name: Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     prerelease: true
+      #     tag_name: latest_build
+      #     files: |
+      #       build/mapletest.cdi
+      #       build/mapletest.elf
 
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
