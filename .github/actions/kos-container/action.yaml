@@ -7,9 +7,11 @@ inputs:
     required: true
 
 runs:
-  uses: addnab/docker-run-action@v3
-  with:
-    image: ghcr.io/cepawiel/dc-kos-base:gcc9-latest
-    options: -v ${{ github.workspace }}:/src
-    run: ${{ inputs.run }}
+  using: "composite"
+  steps:
+    - uses: addnab/docker-run-action@v3
+      with:
+        image: ghcr.io/cepawiel/dc-kos-base:gcc9-latest
+        options: -v ${{ github.workspace }}:/src
+        run: ${{ inputs.run }}
 

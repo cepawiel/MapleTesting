@@ -64,7 +64,7 @@ $(TARGET_BIN): $(TARGET_ELF)
 $(TARGET_ISO): $(SCRAMBLED_BIN) IP.BIN $(ISO_FILES)
 	mkdir -p $(ISO_FOLDER)
 	cp $(SCRAMBLED_BIN) $(ISO_FOLDER)/1ST_READ.BIN
-	mkisofs -C 0,11702 -V $(PROJECT_NAME) -G IP.BIN -l -o $@ $(ISO_FOLDER)/
+	genisoimage -C 0,11702 -V $(PROJECT_NAME) -G IP.BIN -l -o $@ $(ISO_FOLDER)/
 
 $(TARGET_CDI): $(TARGET_ISO)
 	cdi4dc $< $@

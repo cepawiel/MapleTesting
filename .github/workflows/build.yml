@@ -23,6 +23,7 @@ jobs:
             source /opt/toolchains/dc/kos/environ.sh
             kos-cc -v
             kos-c++ -v
+            make
 
 
 
