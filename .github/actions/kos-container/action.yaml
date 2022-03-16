@@ -13,5 +13,7 @@ runs:
       with:
         image: ghcr.io/cepawiel/dc-kos-base:gcc9-latest
         options: -v ${{ github.workspace }}:/src
-        run: ${{ inputs.run }}
+        run: |
+          source /opt/toolchains/dc/kos/environ.sh
+          ${{ inputs.run }}
 
